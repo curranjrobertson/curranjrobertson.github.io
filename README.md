@@ -1,4 +1,4 @@
-# curranjrobertson.github.io
+## curranjrobertson.github.io
 
 Curran Robertson
 
