@@ -8,5 +8,5 @@ Here is a link to my EIT License: https://www.credly.com/badges/e17a3ec1-3c2e-40
 
 Here is a link to my company website: www.cad-vc.org
 
-[CAD-VC](www.cad-vc.org)
+[CAD-VC](https://cad-vc.org/)
 
