@@ -9,3 +9,5 @@ Here is a link to some PDM software I built.
 [EIT License](https://www.credly.com/badges/e17a3ec1-3c2e-408d-8bba-ba95702b791a/public_url)
 
 [Images](./images/images.html)
+
+[Goodreads](https://www.goodreads.com/user/show/155291490-curran-robertson)
