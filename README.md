@@ -8,4 +8,7 @@ Here is a link to some PDM software I built.
 
 [EIT License](https://www.credly.com/badges/e17a3ec1-3c2e-408d-8bba-ba95702b791a/public_url)
 
+Here is a link to a book that I am writing.
+[Book](./book/title.html)
+
 [Images](./images/images.html)
