@@ -17,3 +17,6 @@ Here is a link to a book that I am writing.
 [Goodreads](https://www.goodreads.com/user/show/155291490-curran-robertson)
 
 [Github](https://github.com/curranjrobertson)
+
+[Some Music I Like] (https://www.youtube.com/playlist?list=PLio_a_XmxIqhenMyAxvFjCKbN6LyoQb9A)
+
