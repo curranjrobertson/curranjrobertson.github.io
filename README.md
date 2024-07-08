@@ -19,3 +19,5 @@ Here is a link to a book that I am writing.
 [Github](https://github.com/curranjrobertson)
 
 [Some Music I Like](https://www.youtube.com/playlist?list=PLio_a_XmxIqhenMyAxvFjCKbN6LyoQb9A)
+
+[Blog](./blog/homepage.html)
