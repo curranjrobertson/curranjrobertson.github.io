@@ -12,8 +12,6 @@ Here is a link to some PDM software I built.
 Here is a link to a book that I am writing.
 [Book](./book/title.html)
 
-[Images](./images/images.html)
-
 [Goodreads](https://www.goodreads.com/user/show/155291490-curran-robertson)
 
 [Github](https://github.com/curranjrobertson)
