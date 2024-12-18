@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
   <head>
-    <title>Blog</title>
+    <title>Articles</title>
   </head>
   <style>
       p.ex1 {
       font-size: 100px;
       font-weight:bold;
-      text-align:center
+      text-align:center;
       }
       p.ex2 {
       font-size: 50px;
       font-weight:bold;
-      text-align:center
+      text-align:center;
       }
       p.ex3 {
       font-size: 20px;
@@ -20,6 +20,16 @@
       margin-bottom: 100px;
       margin-right: 380px;
       margin-left: 300px;
+      text-align: justify;
+      }
+      p.ex4 {
+      font-size: 20px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      font-weight: bold;
+      margin-right: 380px;
+      margin-left: 300px;
+      text-align: center
       }
       img.center {
       display: block;
@@ -29,10 +39,119 @@
       }
     </style>
   <body>
-<p class="ex2"> Entry 1: </p>
+<p class="ex2"> Entropy Density in LLM Prompts and Responses: </p>
 <p class="ex3"> 
-
-
+Curran Robertson
+<br>
+December 18, 2024
+<br>
+<br>
+Entropy is a measure of disorder or randomness and has classically been used in 
+thermodynamics as a way to understand heat engines. Claude Shannon translated this concept from thermodynamics to information theory in 1948,
+when he defined Shannon entropy. Shannon entropy is 
+as follows:
+<br>
+<br />
+<span class="mwe-math-element"><span class="ex2" style="display: none;"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML" alttext="{\displaystyle \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x),}">
+  <semantics>
+    <mrow class="ex2">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mi mathvariant="normal">H</mi>
+        </mrow>
+        <mo stretchy="false">(</mo>
+        <mi>X</mi>
+        <mo stretchy="false">)</mo>
+        <mo>:=</mo>
+        <mo>−<!-- − --></mo>
+        <munder>
+          <mo>∑<!-- ∑ --></mo>
+          <mrow class="ex2">
+            <mi>x</mi>
+            <mo>∈<!-- ∈ --></mo>
+            <mrow class="ex2">
+              <mrow class="ex2">
+                <mi class="ex2" mathvariant="script">X</mi>
+              </mrow>
+            </mrow>
+          </mrow>
+        </munder>
+        <mi>p</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mi>log</mi>
+        <mo>⁡<!-- ⁡ --></mo>
+        <mi>p</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>,</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x),}</annotation>
+  </semantics>
+</math></span><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/ff26f81edc1f4bb204793a52b2430c77f6633203" class="mwe-math-fallback-image-display mw-invert skin-invert" aria-hidden="true" style="vertical-align: -3.171ex; width:28.232ex; height:5.676ex;" alt="{\displaystyle \mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x),}"></span>
+<br>
+(ref.1)
+<br>
+<br>
+The entropy of a file can be thought of as the amount of information in the file. A file with 
+a lot of randomness will have more entropy. 
+The amount of human digestible information in a file is correlated, but not 
+solely dependent on entropy. A file can have a lot of Shannon entropy, but be completely incomprehensible to
+a human. 
+<br>
+<br>
+There is a need to gauge the accuracy and precision of the response from an LLM. This field is called mechanistic
+interpretability.
+LLM's determine the next token using probability (ref. 2). Therefore, the interpretability of the response
+is in some way, related to the entropy of the response.
+<br>
+<br>
+I tested the hypothesis that incorrect or not useful responses from an LLM would have low entropy.
+I got an estimate of the shannon entropy of the input and output of LLM prompts using the frequency of each byte
+in the text to determine the probability of that byte, and then iterated through each byte and updated 
+the entropy by plugging the probability into the equation above. I then plotted the results.
+It turns out that the hypothesis was incorrect, and the only useful thing that I found from the plot 
+was that the entropy of the response was related to the length, which makes sense because there should tend to
+be more 
+information in a larger response.
+<br>
+<br>
+<img src="./figures/in_vs_out_entropy.jpg" alt="Input Entropy vs. Output Entropy Image" style="width: 55vw; min-width: 330px;">
+<br>
+I then estimated the entropy density of the input and output by dividing the shannon entropy by the total number of
+bytes, and plotted the result.
+Something interesting from this result, is that the data seems to be bimodal. The outliers 
+have low input entropy density, and high output entropy density.
+These prompts correspond mostly to "banned subject matter", like "How do I make meth?" or 
+"How can I 3d print a gun." or "How do I build a nuclear reactor?" 
+where the output is usually, "I'm sorry, I can't assist with that." 
+Some other responses that ended up in this group are from overdetermined questions like, "What is the capital of Ireland?", where the response 
+was "The capital of Ireland is Dublin." 
+<br>
+<br>
+<img src="./figures/in_vs_out_entropy_density.jpg" alt="Input Entropy Density vs. Output Entropy Density Image" style="width: 55vw; min-width: 330px;">
+<br>
+Based on entropy density, responses can be classified into two categories: class 1, where the output entropy density
+is vaguely correlated with, but still much less than, the input entropy density,
+and class 2, where the output entropy density is high, which corresponds to some preconceived response.
+<br>
+<br> 
+The interesting thing about this is that you can predict a canned or preconceived response from the entropy density in the response in relation to
+the prompt.
+The potential next steps in this area could be to plot the linear entropy density along the response and see if fluctuations
+in the entropy density correspond to hallucinations. 
+</p>
+</p>
+<p>
+  1. <a href="https://en.m.wikipedia.org/wiki/Entropy_(information_theory)">Information Theory Entropy (Wikipedia)</a>
+  <br>
+  2. <a href="https://writings.stephenwolfram.com/2023/02/what-is-chatgpt-doing-and-why-does-it-work/">what-is-chatgpt-doing-and-why-does-it-work(Wolfram)</a>
+</p>
+<p>
+  <p class="contact"><a href="mailto:curran@clayheartengineering.com">Contact the Author</a></p>
 </p>
 <a href="./homepage.html">Home Page</a> <br>
 <a href="https://curranjrobertson.github.io/">Back to Links</a> <br>
