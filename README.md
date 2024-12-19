@@ -23,6 +23,6 @@ Here is a link to some PDM software I built.
 
 [Some Music I Like](https://www.youtube.com/playlist?list=PLio_a_XmxIqhenMyAxvFjCKbN6LyoQb9A)
 
-[Blog](./blog/homepage.html)
+[Articles](./blog/homepage.html)
 
 [X](https://x.com/curranR5480)
