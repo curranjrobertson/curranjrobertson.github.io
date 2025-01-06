@@ -21,7 +21,7 @@ Here is a link to some PDM software I built.
 
 [Pictures](./images/images.html)
 
-[Book](./book/title.html)
+<!-- [Book](./book/title.html) -->
 
 [Some Music I Like](https://www.youtube.com/playlist?list=PLio_a_XmxIqhenMyAxvFjCKbN6LyoQb9A)
 
