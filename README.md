@@ -11,6 +11,8 @@ Here is a link to some PDM software I built.
 
 [Decompiler Tool](./Decompiler/home.html)
 
+[AI Content Detector](./AIDetector/home.html)
+
 [Consultations](https://fieldsengineeringconsultants.com/)
 
 [Portfolio](https://drive.google.com/drive/folders/18Ntjcdg_oRFSatfBP3WWHiAzXN1ULbTe)
