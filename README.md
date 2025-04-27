@@ -3,6 +3,8 @@
 Links: 
 
 Here is a link to some PDM software I built.
+[Products sold through CURRAN R&D](./curranrandd.html)
+
 [CAD-VC](https://cad-vc.org/)
 
 [Transform](./transform/home.html)

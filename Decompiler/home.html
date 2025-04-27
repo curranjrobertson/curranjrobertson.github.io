@@ -71,7 +71,7 @@ document.getElementById("buy-button").addEventListener("click", function () {
 async function verifyPayment() {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
-
+ 
     if (sessionId) {
         const response = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
             headers: { "Authorization": `Bearer YOUR_STRIPE_SECRET_KEY` }
@@ -101,8 +101,13 @@ verifyPayment();
     <p ><a href="https://www.youtube.com/watch?v=BWDR32CUm8c">Youtube Video</a></p>
   </div>
   <div>
-
+    <div class="row justify-content-center">
+      Purchase and gain unlimited access to the JS Flowchart Generator using the subscribe button below. Cancel anytime.
+    </div>
 
   </div>
 </div>
-  </body>
+<a href="../curranrandd.html">
+  <img src="../LOGO5.jpg" alt="logo" style="width: 12.5%; height: 12.5%; margin-left: auto; margin-right: 0; display: block;"> 
+</a>  
+</body>
