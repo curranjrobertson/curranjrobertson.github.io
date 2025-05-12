@@ -113,6 +113,21 @@
         margin-bottom: 2rem;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
+
+      /* Style for links within .feature-box */
+      .feature-box p a {
+        color: #000000; /* Black text for links */
+      }
+
+      .feature-box p a:hover {
+        color: var(--primary-dark); /* Keep hover effect or change as needed */
+      }
+
+      /* Style for icons within .feature-box links */
+      .feature-box p a i {
+        color: red; /* Red icon */
+        margin-right: 0.5em; /* Ensure space between icon and text if not already present */
+      }
       
       .feature-box:hover {
         transform: translateY(-5px);
