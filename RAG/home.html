@@ -70,12 +70,12 @@
       
       h1 {
         font-weight: 800;
-        font-size: 5.5rem; /* Increased font size */
+        font-size: 6rem; /* Further increased font size */
         margin-bottom: 1.5rem;
         /* background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); */ /* Removed gradient background */
         /* -webkit-background-clip: text; */ /* Removed background clip */
         /* -webkit-text-fill-color: transparent; */ /* Removed transparent fill */
-        color: var(--dark); /* Apply solid dark color */
+        color: #000000; /* Apply solid black color */
         letter-spacing: -0.03em;
         position: relative;
         z-index: 2; /* Ensure h1 is above video */
@@ -238,7 +238,7 @@
       @media (max-width: 992px) {
         h1 {
           /* Font size will scale with body's base font-size */
-          font-size: 3.5rem; /* Adjusted for new larger base size */
+          font-size: 4rem; /* Adjusted for new larger base size */
         }
         
         video {
@@ -264,6 +264,33 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
       }
+
+      /* Targeting paragraphs specifically within the title-container (over the video) */
+      .title-container p {
+        color: #f0f0f0; /* Lighter color for text over video */
+        font-size: 1.25rem; 
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7); /* Shadow for legibility */
+      }
+      
+      /* Targeting strong tags specifically within the title-container paragraphs */
+      .title-container p strong {
+        color: #000000; /* Black color for "seconds" */
+        font-weight: 600; /* Ensures it remains bold */
+        /* Add a slight text shadow if needed for better separation from the light text, e.g., text-shadow: 0 1px 1px rgba(255,255,255,0.2); */
+      }
+      
+      /* General p and p strong styles for other parts of the page if needed */
+      /* These will not apply to .title-container due to specificity */
+      body > .container > div:not(.hero-section) p {
+          color: var(--gray); 
+      }
+
+      body > .container > div:not(.hero-section) p strong {
+          color: var(--dark);
+          font-weight: 600;
+      }
     </style>
   </head>
   <body>
@@ -276,7 +303,7 @@
         </video>
         <!-- Removed .apple-bg and .apple-shape divs -->
         <div class="title-container">
-          <h1 class="text-center mb-4">Hanky</h1>
+          <h1 class="text-center mb-4">HANKY</h1>
           <p class="text-center mb-4">Make your own context-aware LLM with ease.</p>
           <p class="text-center mb-4">Upload your URL. Get accurate, reliable answers in <strong>seconds.</strong></p>
         </div>
