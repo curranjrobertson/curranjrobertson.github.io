@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hanky</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="google-site-verification" content="uJ5flcPKk_JrxmuPpEbAUYOnOOFXU1fNXg8Mrs7zr74" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #14b8a6;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --gray: #64748b;
+        --light-gray: #e2e8f0;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        /* Darken the overall background */
+        background: linear-gradient(135deg, #d1d5db 0%, #b0b8c2 100%);
+        color: var(--dark);
+        line-height: 1.7;
+        /* Increase base font size for all text */
+        font-size: 17px; 
+      }
+      
+      .container {
+        max-width: 1200px;
+      }
+      
+      .hero-section {
+        padding: 0; /* Remove padding to allow video to fill */
+        /* background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0) 100%); */ /* Removed old background */
+        border-radius: 1rem;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        height: 60vh; /* Adjust height as needed, or make it dynamic */
+        display: flex; /* For centering content */
+        align-items: center; /* For centering content */
+        justify-content: center; /* For centering content */
+      }
+
+      #hero-video-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cover the area, cropping if necessary */
+        transform: translate(-50%, -50%);
+        z-index: 0; /* Behind the text content */
+        filter: brightness(0.6); /* Darken video for text legibility */
+      }
+      
+      /* Apple-inspired background for title - REMOVED */
+      /* .apple-bg, .apple-shape, .apple-shape-1, .apple-shape-2 styles removed */
+      
+      .title-container {
+        position: relative;
+        padding: 1.5rem;
+        z-index: 2; /* Ensure text is above video */
+        text-align: center; /* Ensure text is centered */
+      }
+      
+      h1 {
+        font-weight: 800;
+        font-size: 6rem; /* Further increased font size */
+        margin-bottom: 1.5rem;
+        /* background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); */ /* Removed gradient background */
+        /* -webkit-background-clip: text; */ /* Removed background clip */
+        /* -webkit-text-fill-color: transparent; */ /* Removed transparent fill */
+        color: #000000; /* Apply solid black color */
+        letter-spacing: -0.03em;
+        position: relative;
+        z-index: 2; /* Ensure h1 is above video */
+        text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3); /* Adjusted shadow for darker text */
+      }
+      
+      /* Apple-style subtle glass effect */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      p {
+        /* color: var(--gray); */ /* Original color might be hard to read */
+        color: #f0f0f0; /* Lighter color for text over video */
+        font-size: 1.25rem; 
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7); /* Shadow for legibility */
+      }
+      
+      p strong {
+        /* color: var(--dark); */
+        color: #ffffff; /* White for strong text over video */
+        font-weight: 600;
+      }
+      
+      .feature-box {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* Style for links within .feature-box */
+      .feature-box p a {
+        color: #000000; /* Black text for links */
+      }
+
+      .feature-box p a:hover {
+        color: var(--primary-dark); /* Keep hover effect or change as needed */
+      }
+
+      /* Style for icons within .feature-box links */
+      .feature-box p a i {
+        color: red; /* Red icon */
+        margin-right: 0.5em; /* Ensure space between icon and text if not already present */
+      }
+      
+      .feature-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+      
+      video { /* General video styling, not for background video */
+        border-radius: 1rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+        height: auto;
+        margin: 2rem 0;
+      }
+      
+      .cta-section {
+        padding: 3rem 2rem;
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        margin: 3rem 0;
+      }
+      
+      .testimonial {
+        font-style: italic;
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+      
+      .testimonial::before {
+        content: '"';
+        font-size: 4rem;
+        position: absolute;
+        top: -1rem;
+        left: 1rem;
+        color: var(--light-gray);
+        font-family: Georgia, serif;
+        opacity: 0.5;
+      }
+      
+      a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+      
+      a:hover {
+        color: var(--primary-dark);
+      }
+      
+      .btn-primary {
+        background: var(--primary);
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+      }
+      
+      .logo-link {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 100;
+        background: white;
+        border-radius: 50%;
+        padding: 0.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      
+      .logo-link:hover {
+        transform: rotate(10deg);
+      }
+      
+      .logo-link img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+      
+      /* Section dividers */
+      .divider {
+        height: 4px;
+        width: 100px;
+        background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        margin: 2rem auto;
+        border-radius: 2px;
+      }
+      
+      /* Make the Stripe button look more integrated */
+      stripe-buy-button {
+        margin: 2rem 0;
+        display: block;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+        h1 {
+          /* Font size will scale with body's base font-size */
+          font-size: 4rem; /* Adjusted for new larger base size */
+        }
+        
+        video {
+          width: 100%;
+          height: auto;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+      }
+
+      /* Visually hidden class for SEO content */
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      /* Targeting paragraphs specifically within the title-container (over the video) */
+      .title-container p {
+        color: #f0f0f0; /* Lighter color for text over video */
+        font-size: 1.25rem; 
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7); /* Shadow for legibility */
+      }
+      
+      /* Targeting strong tags specifically within the title-container paragraphs */
+      .title-container p strong {
+        color: #000000; /* Black color for "seconds" */
+        font-weight: 600; /* Ensures it remains bold */
+        /* Add a slight text shadow if needed for better separation from the light text, e.g., text-shadow: 0 1px 1px rgba(255,255,255,0.2); */
+      }
+      
+      /* General p and p strong styles for other parts of the page if needed */
+      /* These will not apply to .title-container due to specificity */
+      body > .container > div:not(.hero-section) p {
+          color: var(--gray); 
+      }
+
+      body > .container > div:not(.hero-section) p strong {
+          color: var(--dark);
+          font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container py-5">
+      <div class="hero-section">
+        <video autoplay loop muted playsinline id="hero-video-bg">
+          <source src="./CustomRagDemo2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <!-- Removed .apple-bg and .apple-shape divs -->
+        <div class="title-container">
+          <h1 class="text-center mb-4">TRANSFORM WEB</h1>
+          <p class="text-center mb-4">Make your own CAD files, straight from text.</p>
+          <p class="text-center mb-4">Just Ask for a design. Get STL files in <strong>seconds.</strong></p>
+        </div>
+      </div>
+      
+      <div class="text-center mb-4 cta-section">
+        <div class="row justify-content-center">
+          <strong class="mb-3">Try Transform Web now.</strong>
+        </div>
+<script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1RPUHxLBlRVZ3YRnDpEtbGqy"
+  publishable-key="pk_live_51R1ugxLBlRVZ3YRnkTYo3cLi1tcfR96qQBSa1HF7ObR9TddND6FkhtG8osHByxnP3pRwE36DYmbwBsmJmxtlqvUF00WhFqU5dT"
+>
+</stripe-buy-button>
+      
+      <div class="text-center mb-4 feature-box">
+        <p><a href="mailto:curran@clayheartengineering.com"><i class="fas fa-envelope me-2"></i>Email</a> us for enterprise pricing.</p>
+        <p><a href=""><i class="fab fa-youtube me-2"></i>Youtube Demo</a></p>
+      </div>
+      
+      <!-- <div class="testimonial">
+        <div class="row justify-content-center">
+          <center><strong class="mb-3">What users are saying:</strong></center>
+          <br>
+          "More specific than ChatGPT.", "Really fast!", "Great for homework assignments!"
+        </div>
+      </div>
+    </div> -->
+    
+    <a href="../curranrandd.html" class="logo-link">
+      <img src="../LOGO5.jpg" alt="logo"> 
+    </a>
+
+    <!-- SEO Keyword Section -->
+    <div class="visually-hidden">
+      <h2>Generate 3D models from text with our AI-powered Text-to-CAD tool. Instantly convert natural language into parametric CAD and download STL files for 3D printing. No CAD experience required.</h2>
+      <p>
+        Text-to-CAD on your web browser. Download STL files. text to CAD,
+AI CAD generator,
+natural language to 3D model,
+text to 3D model,
+generate STL from text,
+text to STL,
+text based CAD tool,
+CAD with AI,
+LLM CAD generator,
+web-based CAD tool,
+AI design automation,
+3D printing generator,
+no code CAD tool,
+parametric modeling online,
+text to CAD online,
+CAD from prompt
+      </p>
+    </div>
+
+    <!-- Add Bootstrap JS for any interactive components -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
