@@ -1,39 +1,116 @@
 <!doctype html>
 <html>
   <style>
-    p.title {
-      font-family: 'Lucida Console', monospace;
-      font-size: 50px;
-      font-weight:bold;
-      text-align:center
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e8f0ff 0%, #f0f4ff 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
     }
-    p.body {
-    font-family: 'Lucida Console', monospace;
-    font-size: 30px;
-    text-align:center;
-    font-weight: bold;
+    .header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    p.contact {
-    font-family: 'Lucida Console', monospace;
-    font-size: 20px;
-    margin-right: 450px;
-    margin-left: 450px;
-    font-weight: bold;
-    background-color: rgb(182, 163, 163);
-    text-align: center;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1a73e8;
     }
-    img.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    .main-title {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      color: #1f2937;
+      margin: 60px auto 30px;
+      max-width: 900px;
+      line-height: 1.2;
     }
-    img.right {
-      width: 12.5%;
-      height: 12.5%;
-      margin-left: auto;
-      margin-right: 0;
-      display: block;
+    .subtitle {
+      font-size: 20px;
+      text-align: center;
+      color: #6b7280;
+      margin: 0 auto 50px;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #1a73e8;
+      color: white;
+      padding: 16px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 20px;
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+      transition: all 0.3s;
+    }
+    .cta-button:hover {
+      background-color: #1557b0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(26, 115, 232, 0.4);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 80px auto;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+    .feature-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: #e8f0ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+    .feature-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 15px;
+    }
+    .feature-description {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+    .trust-badges {
+      text-align: center;
+      margin: 40px auto;
+      color: #6b7280;
+      font-size: 16px;
+    }
+    .logo-corner {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+    .logo-corner:hover {
+      transform: scale(1.05);
     }
   </style>
   <head>
@@ -51,10 +128,52 @@
 Software Compliance and Security Testing, Software Testing Tools, Compliance Management, Security Testing Solutions, Software Quality Assurance, Risk Management, Vulnerability Assessment, Penetration Testing, Security Auditing, Compliance Automation, Software Development Lifecycle, DevSecOps, Continuous Compliance, Application Security Testing, Cloud Security Testing">
   </head>
   <body>
-    <p class="title"><b>Software Functionality and Security Testing</b></p>
-    <p class="body"> <a href="https://web-app-inspector-cjr5480.replit.app/">Software Compliance and Security Testing Tool</a></p>
-    </p>
-<a href="../curranrandd.html">
-  <img src="../LOGO5.jpg" alt="logo" class="right"> 
-</a>
-</body>
+    <div class="header">
+      <div class="logo">🔧 WebTester AI</div>
+    </div>
+    
+    <div class="main-title">AI-Powered Web Application Testing</div>
+    
+    <div class="subtitle">
+      Automatically analyze your web applications for functionality and security issues using advanced AI. Get comprehensive reports optimized for fixing problems with LLMs.
+    </div>
+    
+    <div style="text-align: center;">
+      <a href="https://web-app-inspector-cjr5480.replit.app/" class="cta-button">Try WebTester AI Now</a>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Security Analysis</div>
+        <div class="feature-description">Comprehensive security scanning with OWASP categorization and AI-powered vulnerability assessment.</div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Functionality Testing</div>
+        <div class="feature-description">Smart testing of web application features with context-aware analysis using your documentation.</div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Detailed Reports</div>
+        <div class="feature-description">Generate comprehensive PDF and JSON reports optimized for feeding back into LLMs for issue resolution.</div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">AI-Powered</div>
+        <div class="feature-description">Advanced OpenAI integration provides intelligent analysis and actionable recommendations for improvements.</div>
+      </div>
+    </div>
+    
+    <div class="trust-badges">
+      🚀 Free trial available • 📱 Works with any web application • ⚡ Quick setup
+    </div>
+
+    <a href="../curranrandd.html">
+      <img src="../LOGO5.jpg" alt="logo" class="logo-corner"> 
+    </a>
+  </body>
+</html>
