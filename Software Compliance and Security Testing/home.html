@@ -7,6 +7,37 @@
       background: linear-gradient(135deg, #e8f0ff 0%, #f0f4ff 100%);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
+      position: relative;
+    }
+    
+    .hero-section {
+      padding: 0;
+      border-radius: 1rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 0;
+      filter: brightness(0.6);
+    }
+    
+    .title-container {
+      position: relative;
+      padding: 1.5rem;
+      z-index: 2;
+      text-align: center;
     }
     .header {
       padding: 20px;
@@ -27,14 +58,18 @@
       margin: 60px auto 30px;
       max-width: 900px;
       line-height: 1.2;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
     }
     .subtitle {
       font-size: 20px;
       text-align: center;
-      color: #6b7280;
+      color: #f0f0f0;
       margin: 0 auto 50px;
       max-width: 700px;
       line-height: 1.5;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
     }
     .cta-button {
       display: inline-block;
@@ -134,15 +169,23 @@ Software Compliance and Security Testing, Software Testing Tools, Compliance Man
     
     <div class="main-title">AI-Powered Web Application Testing</div>
     
-    <div class="subtitle">
+    <div class="subtitle" style="color: #6b7280; text-shadow: none;">
       Automatically analyze your web applications for functionality and security issues using advanced AI. Get comprehensive reports optimized for fixing problems with LLMs.
     </div>
-    
-    <div style="text-align: center;">
-      <a href="https://web-app-inspector-cjr5480.replit.app/" class="cta-button">Access App Tester</a>
-      <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">
-        Quick login with GitHub, Google, or email required
-      </p>
+
+    <div class="hero-section">
+      <video autoplay loop muted playsinline id="hero-video-bg">
+        <source src="./App Tester Demo2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="title-container">
+        <div style="text-align: center;">
+          <a href="https://web-app-inspector-cjr5480.replit.app/" class="cta-button">Access App Tester</a>
+          <p style="color: #f0f0f0; font-size: 14px; margin-top: 10px; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);">
+            Quick login with GitHub, Google, or email required
+          </p>
+        </div>
+      </div>
     </div>
     
     <div class="features-grid">
