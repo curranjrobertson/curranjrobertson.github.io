@@ -334,6 +334,16 @@
           color: var(--dark);
           font-weight: 600;
       }
+
+      /* Ensure feature-box content has proper dark text */
+      .feature-box p {
+        color: var(--dark) !important;
+      }
+
+      .feature-box p strong {
+        color: var(--dark) !important;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body>
@@ -357,15 +367,31 @@
         <div class="row justify-content-center">
           <strong class="mb-3">Try Transform Web now - The future of CAD design.</strong>
         </div>
+        
+        <div class="row justify-content-center">
+          <div class="col-md-6 mb-3">
+            <h4>Personal Plan</h4>
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1RPUHxLBlRVZ3YRnDpEtbGqy"
+              publishable-key="pk_live_51R1ugxLBlRVZ3YRnkTYo3cLi1tcfR96qQBSa1HF7ObR9TddND6FkhtG8osHByxnP3pRwE36DYmbwBsmJmxtlqvUF00WhFqU5dT">
+            </stripe-buy-button>
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <h4>Enterprise Plan - $100/month</h4>
 <script async
   src="https://js.stripe.com/v3/buy-button.js">
 </script>
 
 <stripe-buy-button
-  buy-button-id="buy_btn_1RPUHxLBlRVZ3YRnDpEtbGqy"
+  buy-button-id="buy_btn_1SGSXoLBlRVZ3YRnEpgTRTcv"
   publishable-key="pk_live_51R1ugxLBlRVZ3YRnkTYo3cLi1tcfR96qQBSa1HF7ObR9TddND6FkhtG8osHByxnP3pRwE36DYmbwBsmJmxtlqvUF00WhFqU5dT"
 >
 </stripe-buy-button>
+          </div>
+        </div>
+      </div>
       
       <div class="text-center mb-4 feature-box">
         <h3 class="visually-hidden">Contact Transform Web</h3>
