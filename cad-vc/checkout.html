@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <style>
+    p.title {
+      font-family: 'Lucida Console', monospace;
+      font-size: 50px;
+      font-weight:bold;
+      text-align:center
+    }
+    p.body {
+    font-family: 'Lucida Console', monospace;
+    font-size: 30px;
+    margin-right: 150px;
+    margin-left: 80px;
+    font-weight: bold;
+    }
+    p.contact {
+    font-family: 'Lucida Console', monospace;
+    font-size: 20px;
+    margin-right: 450px;
+    margin-left: 450px;
+    font-weight: bold;
+    background-color: rgb(182, 163, 163);
+    text-align: center;
+    }
+    img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    }
+  </style>
+  <head>
+    <title>Checkout</title>
+  </head>
+  <body>
+    <p class="body">Get a 1 year license to use CAD-VC for $15 per month. Subscribe using PayPal below. 
+    </p>
+
+    <div id="paypal-button-container-P-5FS47482XR066632TM36GGUI"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=AcS8rjQPpllGJqWVJanpvyQ9CX6X-B0d7aHGoqS7-6OTuJUrthsPdwr4tHLpmIMfUnNS_f8ch3Wk3spl&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'pill',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-5FS47482XR066632TM36GGUI'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-5FS47482XR066632TM36GGUI'); // Renders the PayPal button
+</script>
+Initial payment is $15. Cancel anytime.
+<p class="contact">  <a href="./index.html">Back to Home Page</a></p>
+<a href="https://curranjrobertson.github.io/curranrandd.html">
+  <img src="./LOGO5.jpg" alt="logo" style="width: 12.5%; height: 12.5%; margin-left: auto; margin-right: 0; display: block;"> 
+</a>
+  </body>
+
