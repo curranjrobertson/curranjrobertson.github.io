@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Body Diagram Generator - Note: This tool currently produces inaccurate answers. Use at your discretion.</title>
+    <style>
+        body {
+            font-family: 'Lucida Console', monospace;
+            background-color: #0c3c0c;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .panel {
+            flex: 1;
+            min-width: 300px;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        textarea, input[type="password"], select {
+            font-family: 'Lucida Console', monospace;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #999;
+            box-sizing: border-box;
+            font-size: 13px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        button {
+            font-family: 'Lucida Console', monospace;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .generate-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            background-color: #555;
+        }
+
+        .generate-btn:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        .remove-btn {
+            background-color: #c00;
+            color: #fff;
+            border: none;
+        }
+
+        .remove-btn:hover {
+            background-color: #900;
+        }
+
+        .download-btn {
+            background-color: #069;
+            color: #fff;
+            border: none;
+            display: none;
+        }
+
+        .download-btn:hover {
+            background-color: #047;
+        }
+
+        .upload-zone {
+            border: 2px dashed #999;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .upload-zone:hover {
+            border-color: #333;
+            background: #f9f9f9;
+        }
+
+        .upload-zone.dragover {
+            border-color: #069;
+            background: #e6f3ff;
+        }
+
+        .upload-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        #previewContainer {
+            display: none;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 250px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        #fbdCanvas {
+            background: #fff;
+            border: 1px solid #333;
+            max-width: 100%;
+            display: none;
+        }
+
+        #fbdDescription {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            display: none;
+        }
+
+        #resultContainer {
+            text-align: center;
+        }
+
+        .placeholder-text {
+            color: #999;
+            font-style: italic;
+        }
+
+        .force-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .force-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        .force-list li:last-child {
+            border-bottom: none;
+        }
+
+        .error-message {
+            background: #fdd;
+            border: 1px solid #c00;
+            padding: 10px;
+            color: #900;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .api-note {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .provider-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .provider-icon {
+            margin-right: 5px;
+        }
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ccc;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Free Body Diagram Generator</h1>
+    <p class="subtitle">Upload an image and describe the object to generate a free body diagram</p>
+
+    <div class="main-content">
+        <div class="panel">
+            <h2>Input</h2>
+            
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">📷</div>
+                <p>Drag & drop an image here or click to browse</p>
+                <p style="font-size: 11px; color: #999;">Supports: JPG, PNG, GIF, WebP</p>
+            </div>
+            <input type="file" id="imageInput" accept="image/*">
+            
+            <div id="previewContainer">
+                <img id="imagePreview" alt="Preview">
+                <br>
+                <button class="remove-btn" id="removeImage">Remove Image</button>
+            </div>
+
+            <label for="promptInput">Describe the object and scenario:</label>
+            <textarea id="promptInput" placeholder="Example: A box sitting on an inclined plane at 30 degrees. The box has a mass of 10kg and there is friction between the box and the surface."></textarea>
+
+            <label for="providerSelect">AI Provider:</label>
+            <select id="providerSelect">
+                <option value="openai">OpenAI (GPT-4o)</option>
+                <option value="grok">xAI (Grok)</option>
+                <option value="anthropic">Anthropic (Claude)</option>
+                <option value="google">Google (Gemini)</option>
+            </select>
+            <div class="provider-info" id="providerInfo">
+                <span id="providerDescription">Best for image analysis with vision capabilities</span>
+            </div>
+
+            <label for="apiKey" id="apiKeyLabel">OpenAI API Key:</label>
+            <input type="password" id="apiKey" placeholder="sk-...">
+            <p class="api-note">Your API key is stored locally and never sent to our servers.</p>
+
+            <button class="generate-btn" id="generateBtn">
+                <span class="spinner" id="spinner"></span>
+                <span id="btnText">Generate FBD</span>
+            </button>
+
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Generated Free Body Diagram</h2>
+            
+            <div id="resultContainer">
+                <p class="placeholder-text" id="placeholderText">Your generated FBD will appear here</p>
+                <canvas id="fbdCanvas" width="500" height="500"></canvas>
+                <div id="fbdDescription">
+                    <h3>Force Analysis:</h3>
+                    <ul class="force-list" id="forceList"></ul>
+                </div>
+                <button class="download-btn" id="downloadBtn">Download Diagram</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+         <img src="../LOGO5.jpg" alt="logo" style="width: 12.5%; height: 12.5%; margin-left: auto; margin-right: 0; display: block;"> 
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadZone = document.getElementById('uploadZone');
+        const imageInput = document.getElementById('imageInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const removeImageBtn = document.getElementById('removeImage');
+        const promptInput = document.getElementById('promptInput');
+        const apiKeyInput = document.getElementById('apiKey');
+        const apiKeyLabel = document.getElementById('apiKeyLabel');
+        const providerSelect = document.getElementById('providerSelect');
+        const providerDescription = document.getElementById('providerDescription');
+        const generateBtn = document.getElementById('generateBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Provider configurations
+        const providers = {
+            openai: {
+                name: 'OpenAI',
+                keyLabel: 'OpenAI API Key:',
+                keyPlaceholder: 'sk-...',
+                description: 'Best for image analysis with vision capabilities',
+                icon: '🤖',
+                endpoint: 'https://api.openai.com/v1/chat/completions',
+                model: 'gpt-4o',
+                supportsVision: true
+            },
+            grok: {
+                name: 'xAI (Grok)',
+                keyLabel: 'xAI API Key:',
+                keyPlaceholder: 'xai-...',
+                description: 'Fast responses with Grok vision model',
+                icon: '⚡',
+                endpoint: 'https://api.x.ai/v1/chat/completions',
+                model: 'grok-2-vision-1212',
+                supportsVision: true
+            },
+            anthropic: {
+                name: 'Anthropic (Claude)',
+                keyLabel: 'Anthropic API Key:',
+                keyPlaceholder: 'sk-ant-...',
+                description: 'Claude with excellent reasoning capabilities',
+                icon: '🧠',
+                endpoint: 'https://api.anthropic.com/v1/messages',
+                model: 'claude-sonnet-4-20250514',
+                supportsVision: true
+            },
+            google: {
+                name: 'Google (Gemini)',
+                keyLabel: 'Google API Key:',
+                keyPlaceholder: 'AIza...',
+                description: 'Gemini Pro with multimodal understanding',
+                icon: '✨',
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+                model: 'gemini-1.5-flash',
+                supportsVision: true
+            }
+        };
+        const placeholderText = document.getElementById('placeholderText');
+        const fbdCanvas = document.getElementById('fbdCanvas');
+        const fbdDescription = document.getElementById('fbdDescription');
+        const forceList = document.getElementById('forceList');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let uploadedImage = null;
+
+        // Load saved provider and API key
+        const savedProvider = localStorage.getItem('fbd_provider') || 'openai';
+        providerSelect.value = savedProvider;
+        updateProviderUI(savedProvider);
+        
+        const savedApiKey = localStorage.getItem(`fbd_api_key_${savedProvider}`);
+        if (savedApiKey) {
+            apiKeyInput.value = savedApiKey;
+        }
+
+        // Provider change handler
+        providerSelect.addEventListener('change', () => {
+            const provider = providerSelect.value;
+            localStorage.setItem('fbd_provider', provider);
+            updateProviderUI(provider);
+            
+            // Load saved key for this provider
+            const savedKey = localStorage.getItem(`fbd_api_key_${provider}`);
+            apiKeyInput.value = savedKey || '';
+        });
+
+        function updateProviderUI(provider) {
+            const config = providers[provider];
+            apiKeyLabel.textContent = config.keyLabel;
+            apiKeyInput.placeholder = config.keyPlaceholder;
+            providerDescription.textContent = config.description;
+            const iconEl = document.querySelector('.provider-icon');
+            if (iconEl) iconEl.textContent = config.icon;
+        }
+
+        // Save API key on change
+        apiKeyInput.addEventListener('change', () => {
+            const provider = providerSelect.value;
+            localStorage.setItem(`fbd_api_key_${provider}`, apiKeyInput.value);
+        });
+
+        // Upload zone click
+        uploadZone.addEventListener('click', () => imageInput.click());
+
+        // Drag and drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleImageUpload(file);
+            }
+        });
+
+        // File input change
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleImageUpload(file);
+            }
+        });
+
+        // Handle image upload
+        function handleImageUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedImage = e.target.result;
+                imagePreview.src = uploadedImage;
+                uploadZone.style.display = 'none';
+                previewContainer.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Remove image
+        removeImageBtn.addEventListener('click', () => {
+            uploadedImage = null;
+            imageInput.value = '';
+            previewContainer.style.display = 'none';
+            uploadZone.style.display = 'block';
+        });
+
+        // Generate FBD
+        generateBtn.addEventListener('click', async () => {
+            const apiKey = apiKeyInput.value.trim();
+            const prompt = promptInput.value.trim();
+
+            // Validation
+            if (!apiKey) {
+                showError('Please enter your OpenAI API key');
+                return;
+            }
+
+            if (!prompt && !uploadedImage) {
+                showError('Please upload an image or provide a description');
+                return;
+            }
+
+            // Start loading
+            setLoading(true);
+            hideError();
+
+            try {
+                const provider = providerSelect.value;
+                const forces = await analyzeFBD(apiKey, prompt, uploadedImage, provider);
+                drawFBD(forces);
+            } catch (error) {
+                showError(error.message || 'An error occurred while generating the FBD');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Analyze with selected AI provider
+        async function analyzeFBD(apiKey, prompt, imageBase64, provider) {
+            const config = providers[provider];
+            
+            const systemPrompt = `You are a physics expert that analyzes images and descriptions to identify all forces acting on an object for a Free Body Diagram (FBD).
+
+CRITICAL: Use Chain-of-Thought reasoning. You MUST explicitly work through each step below in your analysis BEFORE generating the final JSON output. This systematic approach ensures accuracy and reduces errors.
+
+STEP-BY-STEP ANALYSIS PROCESS:
+
+Step 1: IDENTIFY THE OBJECT OF INTEREST
+   - Examine the uploaded image and description carefully
+   - Name the specific object that will be isolated for the free body diagram
+   - Describe its current state (at rest, moving, accelerating, etc.)
+   - Identify what the object is in contact with or connected to
+
+Step 2: LIST ALL EXTERNAL FORCES
+   For each force acting on the object, explicitly state:
+   a) Force name and type (e.g., Weight, Normal Force, Friction, Tension, Applied Force)
+   b) Direction of the force (specify angle: 0° = right, 90° = up, 180° = left, 270° = down)
+   c) Point of application (where on the object does this force act?)
+   d) Relative magnitude (compare to other forces if possible)
+
+Step 3: EXPLAIN EACH FORCE BASED ON PHYSICS PRINCIPLES
+   For every force you identified, justify WHY it exists:
+   - Weight (mg): Always present due to gravity, acts at center of gravity, points downward (270°)
+   - Normal Force (N): Exists at contact surfaces, perpendicular to surface, prevents penetration
+   - Friction (f): Present at rough surfaces, parallel to surface, opposes relative motion or potential motion
+   - Tension (T): Exists in ropes/cables/strings, acts along the cable direction, pulls on the object
+   - Applied Forces (F): External pushes or pulls described in the scenario
+   - Spring Forces: F = k×Δx, acts along spring axis, opposes displacement
+   - Air Resistance: Opposes velocity, often negligible unless specified
+
+Step 4: VERIFY COMPLETENESS
+   - Have you isolated the object from ALL supports and connections?
+   - Did you replace each removed support with appropriate reaction force(s)?
+   - Are all forces acting AT the correct application points (not just near the object)?
+   - Does the arrow direction match the actual force direction?
+
+Step 5: GENERATE JSON OUTPUT
+   Only after completing Steps 1-4, create the JSON object following the five-step FBD process:
+
+   1. SELECT AND ISOLATE THE OBJECT
+      - The body must be "free" from supports holding it in place
+      - Sketch the object as if floating in space, disconnected from everything
+      - Do NOT draw forces on top of the original problem - the body must be drawn free of its supports
+
+   2. SELECT A REFERENCE FRAME
+      - Use a right-handed coordinate system (typically x horizontal, y vertical)
+      - Choose coordinates that minimize unknown force components
+
+   3. IDENTIFY ALL LOADS (Applied Forces)
+      - Add vectors for applied forces and couple moments acting on the body
+      - Include the body's weight if non-negligible (acts at center of gravity)
+      - Draw arrows in the direction of known forces
+
+   4. IDENTIFY ALL REACTIONS (Support Forces)
+      - Replace each removed support with appropriate reaction forces/moments:
+        * Normal surface/roller: Force perpendicular to surface (1 unknown)
+        * Cable/rope: Tension force along the cable direction (1 unknown)
+        * Frictionless pin/hinge: Two perpendicular force components (2 unknowns)
+        * Rough surface: Normal force + friction force (2 unknowns)
+        * Fixed/welded support: Two force components + moment (3 unknowns)
+        * Spring: Force F = k×delta along spring axis
+
+   5. LABEL THE DIAGRAM
+      - Every force must have a descriptive variable name and clear arrowhead
+      - Include all relevant dimensions and angles
+
+Now generate a JSON object with the following structure:
+{
+    "objectName": "name of the main object",
+    "objectShape": "box" | "circle" | "point",
+    "forces": [
+        {
+            "name": "Force name (e.g., Weight, Normal Force, Friction, Applied Force, Tension)",
+            "symbol": "Symbol (e.g., W, N, f, F, T)",
+            "direction": angle in degrees (0 = right, 90 = up, 180 = left, 270 = down),
+            "magnitude": "relative magnitude description or value if known",
+            "color": "hex color for the arrow"
+        }
+    ],
+    "analysis": "Brief explanation of the force analysis"
+}
+
+Common forces to consider:
+- Weight (W or mg): Always points straight down (270°)
+- Normal Force (N): Perpendicular to contact surface
+- Friction (f): Parallel to surface, opposes motion
+- Applied Force (F): As described in the scenario
+- Tension (T): Along the rope/string direction
+- Air Resistance: Opposes velocity direction
+- Spring Force: Along spring axis
+
+Use these colors:
+- Weight: #ef4444 (red)
+- Normal Force: #22c55e (green)
+- Friction: #f59e0b (orange)
+- Applied Force: #3b82f6 (blue)
+- Tension: #8b5cf6 (purple)
+- Other: #06b6d4 (cyan)
+
+Return ONLY valid JSON, no markdown or explanation outside the JSON.`;
+
+            const userPrompt = prompt || 'Analyze this image and identify all forces for a free body diagram.';
+            
+            let response;
+            
+            if (provider === 'anthropic') {
+                // Anthropic Claude API format
+                const content = [];
+                
+                if (imageBase64) {
+                    const base64Data = imageBase64.split(',')[1];
+                    const mediaType = imageBase64.match(/data:([^;]+);/)?.[1] || 'image/jpeg';
+                    content.push({
+                        type: 'image',
+                        source: {
+                            type: 'base64',
+                            media_type: mediaType,
+                            data: base64Data
+                        }
+                    });
+                }
+                content.push({ type: 'text', text: userPrompt });
+                
+                response = await fetch(config.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: config.model,
+                        max_tokens: 1000,
+                        system: systemPrompt,
+                        messages: [{ role: 'user', content: content }]
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const content_text = data.content[0].text;
+                return parseAIResponse(content_text);
+                
+            } else if (provider === 'google') {
+                // Google Gemini API format
+                const parts = [];
+                
+                if (imageBase64) {
+                    const base64Data = imageBase64.split(',')[1];
+                    const mimeType = imageBase64.match(/data:([^;]+);/)?.[1] || 'image/jpeg';
+                    parts.push({
+                        inline_data: {
+                            mime_type: mimeType,
+                            data: base64Data
+                        }
+                    });
+                }
+                parts.push({ text: systemPrompt + '\n\n' + userPrompt });
+                
+                response = await fetch(`${config.endpoint}?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{ parts: parts }],
+                        generationConfig: {
+                            temperature: 0.3,
+                            maxOutputTokens: 1000
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const content = data.candidates[0].content.parts[0].text;
+                return parseAIResponse(content);
+                
+            } else {
+                // OpenAI and Grok (OpenAI-compatible) format
+                const messages = [
+                    { role: 'system', content: systemPrompt }
+                ];
+
+                const userContent = [];
+                
+                if (imageBase64) {
+                    userContent.push({
+                        type: 'image_url',
+                        image_url: {
+                            url: imageBase64,
+                            detail: 'high'
+                        }
+                    });
+                }
+
+                userContent.push({
+                    type: 'text',
+                    text: userPrompt
+                });
+
+                messages.push({ role: 'user', content: userContent });
+
+                response = await fetch(config.endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: config.model,
+                        messages: messages,
+                        max_tokens: 1000,
+                        temperature: 0.3
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const content = data.choices[0].message.content;
+                return parseAIResponse(content);
+            }
+        }
+        
+        function parseAIResponse(content) {
+
+            // Try to extract JSON if wrapped in markdown
+            const jsonMatch = content.match(/```json\n?([\s\S]*?)\n?```/) || 
+                              content.match(/```\n?([\s\S]*?)\n?```/);
+            const jsonStr = jsonMatch ? jsonMatch[1] : content;
+            
+            try {
+                return JSON.parse(jsonStr);
+            } catch (e) {
+                console.error('Parse error:', content);
+                throw new Error('Failed to parse AI response. Please try again.');
+            }
+        }
+
+        // Draw FBD on canvas
+        function drawFBD(data) {
+            const ctx = fbdCanvas.getContext('2d');
+            const width = fbdCanvas.width;
+            const height = fbdCanvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            // Clear canvas
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw title
+            ctx.fillStyle = '#1a1a2e';
+            ctx.font = 'bold 18px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Free Body Diagram: ${data.objectName}`, centerX, 30);
+
+            // Draw object
+            ctx.strokeStyle = '#1a1a2e';
+            ctx.lineWidth = 3;
+            ctx.fillStyle = '#e0e7ff';
+
+            if (data.objectShape === 'circle') {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 40, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            } else if (data.objectShape === 'point') {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
+                ctx.fillStyle = '#1a1a2e';
+                ctx.fill();
+            } else {
+                // Default box
+                ctx.fillRect(centerX - 40, centerY - 30, 80, 60);
+                ctx.strokeRect(centerX - 40, centerY - 30, 80, 60);
+            }
+
+            // Group forces by similar directions (within 15 degrees)
+            const directionThreshold = 15;
+            const forceGroups = [];
+            
+            // Debug: log incoming forces
+            console.log('Forces received:', data.forces);
+            
+            if (!data.forces || data.forces.length === 0) {
+                ctx.fillStyle = '#666';
+                ctx.font = '16px Segoe UI';
+                ctx.fillText('No forces detected', centerX, centerY + 80);
+                return;
+            }
+            
+            data.forces.forEach((force) => {
+                // Ensure force has required properties with defaults
+                force.direction = force.direction ?? 0;
+                force.color = force.color || '#3b82f6';
+                force.symbol = force.symbol || 'F';
+                
+                let addedToGroup = false;
+                for (const group of forceGroups) {
+                    const angleDiff = Math.abs(group.baseDirection - force.direction);
+                    const normalizedDiff = Math.min(angleDiff, 360 - angleDiff);
+                    if (normalizedDiff <= directionThreshold) {
+                        group.forces.push(force);
+                        addedToGroup = true;
+                        break;
+                    }
+                }
+                if (!addedToGroup) {
+                    forceGroups.push({
+                        baseDirection: force.direction,
+                        forces: [force]
+                    });
+                }
+            });
+            
+            console.log('Force groups:', forceGroups);
+
+            // Draw forces with offset for groups
+            const arrowLength = 100;
+            const lateralSpacing = 25; // Spacing between parallel arrows
+
+            forceGroups.forEach((group) => {
+                const numForces = group.forces.length;
+                
+                group.forces.forEach((force, indexInGroup) => {
+                    console.log('Drawing force:', force.symbol, 'direction:', force.direction, 'color:', force.color);
+                    
+                    const angle = (force.direction * Math.PI) / 180;
+                    
+                    // Calculate lateral offset for multiple forces in same direction
+                    let offsetX = 0;
+                    let offsetY = 0;
+                    
+                    if (numForces > 1) {
+                        // Calculate perpendicular offset
+                        const perpAngle = angle + Math.PI / 2;
+                        const offsetAmount = (indexInGroup - (numForces - 1) / 2) * lateralSpacing;
+                        offsetX = Math.cos(perpAngle) * offsetAmount;
+                        offsetY = -Math.sin(perpAngle) * offsetAmount;
+                    }
+                    
+                    const startX = centerX + offsetX;
+                    const startY = centerY + offsetY;
+                    const endX = startX + Math.cos(angle) * arrowLength;
+                    const endY = startY - Math.sin(angle) * arrowLength;
+
+                    // Draw arrow line
+                    ctx.strokeStyle = force.color;
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+
+                    // Draw arrowhead
+                    const headLength = 15;
+                    const headAngle = Math.PI / 6;
+                    ctx.beginPath();
+                    ctx.moveTo(endX, endY);
+                    ctx.lineTo(
+                        endX - headLength * Math.cos(angle - headAngle),
+                        endY + headLength * Math.sin(angle - headAngle)
+                    );
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(endX, endY);
+                    ctx.lineTo(
+                        endX - headLength * Math.cos(angle + headAngle),
+                        endY + headLength * Math.sin(angle + headAngle)
+                    );
+                    ctx.stroke();
+
+                    // Draw label
+                    const labelOffset = 20;
+                    const labelX = endX + Math.cos(angle) * labelOffset;
+                    const labelY = endY - Math.sin(angle) * labelOffset;
+                    
+                    ctx.fillStyle = force.color;
+                    ctx.font = 'bold 16px Segoe UI';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(force.symbol, labelX, labelY);
+                });
+            });
+
+            // Draw coordinate axes
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(20, height - 30);
+            ctx.lineTo(80, height - 30);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(75, height - 35);
+            ctx.lineTo(80, height - 30);
+            ctx.lineTo(75, height - 25);
+            ctx.stroke();
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(20, height - 30);
+            ctx.lineTo(20, height - 90);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(15, height - 85);
+            ctx.lineTo(20, height - 90);
+            ctx.lineTo(25, height - 85);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#999';
+            ctx.font = '12px Segoe UI';
+            ctx.fillText('x', 85, height - 30);
+            ctx.fillText('y', 20, height - 95);
+
+            // Show canvas and description
+            placeholderText.style.display = 'none';
+            fbdCanvas.style.display = 'block';
+            fbdDescription.style.display = 'block';
+            downloadBtn.style.display = 'inline-block';
+
+            // Update force list
+            forceList.innerHTML = '';
+            data.forces.forEach(force => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong style="color: ${force.color}">${force.symbol}</strong> - ${force.name}: ${force.magnitude}`;
+                forceList.appendChild(li);
+            });
+
+            // Add analysis
+            const analysisLi = document.createElement('li');
+            analysisLi.innerHTML = `<br><em>${data.analysis}</em>`;
+            analysisLi.style.borderBottom = 'none';
+            forceList.appendChild(analysisLi);
+        }
+
+        // Download diagram
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'free-body-diagram.png';
+            link.href = fbdCanvas.toDataURL('image/png');
+            link.click();
+        });
+
+        // Helper functions
+        function setLoading(loading) {
+            generateBtn.disabled = loading;
+            spinner.style.display = loading ? 'block' : 'none';
+            btnText.textContent = loading ? 'Analyzing...' : 'Generate FBD';
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
