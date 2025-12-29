@@ -256,9 +256,90 @@
             color: #666;
             font-size: 12px;
         }
+
+        /* Paywall Styles */
+        #paywall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .paywall-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .paywall-content h2 {
+            color: #333;
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .paywall-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .paywall-features {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .paywall-features li {
+            margin: 10px 0;
+            color: #444;
+        }
     </style>
 </head>
 <body>
+    <!-- Paywall Overlay -->
+    <div id="paywall" style="display: none;">
+        <div class="paywall-content">
+            <h2>🔒 Unlock FBD Generator</h2>
+            <p>Get unlimited access to the Free Body Diagram Generator with premium features:</p>
+            <ul class="paywall-features">
+                <li>✓ Unlimited diagram generations</li>
+                <li>✓ Multiple AI provider options</li>
+                <li>✓ High-quality output</li>
+                <li>✓ Priority support</li>
+            </ul>
+            <p><strong>Just $5/month</strong></p>
+            <a href="https://buy.stripe.com/fZueVedpMelO5O94Kt3wQ09" class="subscribe-btn" target="_blank" rel="noopener">Subscribe Now</a>
+            <p style="font-size: 12px; margin-top: 20px; color: #999;">Powered by Stripe</p>
+        </div>
+    </div>
+
     <h1>Free Body Diagram Generator - Note: This tool currently produces inaccurate answers. Use at your discretion.</h1>
     <p class="subtitle">Upload an image and describe the object to generate a free body diagram</p>
 
@@ -325,6 +406,32 @@
     </footer>
 
     <script>
+        // Paywall Logic
+        const paywall = document.getElementById('paywall');
+        const hasSubscription = localStorage.getItem('fbd_subscription') === 'active';
+        
+        // Show paywall if no subscription
+        if (!hasSubscription) {
+            paywall.style.display = 'flex';
+            // Disable all inputs and buttons
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to activate subscription (call this after successful payment)
+        function activateSubscription() {
+            localStorage.setItem('fbd_subscription', 'active');
+            paywall.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Listen for URL parameter indicating successful payment
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('subscription') === 'success') {
+            activateSubscription();
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
         // DOM Elements
         const uploadZone = document.getElementById('uploadZone');
         const imageInput = document.getElementById('imageInput');
