@@ -4,6 +4,8 @@ Links:
 
 [Products sold through CURRAN R&D](./curranrandd.html)
 
+[Book](./book/title.html)
+
 [CAD-VC](https://cad-vc.org/)
 
 [Transform](./transform/home.html)
