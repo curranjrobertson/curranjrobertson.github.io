@@ -4,21 +4,7 @@ Links:
 
 [Products sold through CURRAN R&D](./curranrandd.html)
 
-[Book](./book/title.html)
-
-[CAD-VC](https://cad-vc.org/)
-
-[Transform](./transform/home.html)
-
-[Betrayal Prediction App](./Betrayal Prediction/home.html)
-
-[Decompiler Tool](./Decompiler/home.html)
-
-[AI Content Detector](./AIDetector/home.html)
-
-[Custom RAG](./RAG/home.html)
-
-[Transform Web](./TransformWeb/Transform-Web.html)
+[Fiction Writing](./book/title.html)
 
 [Consultations](https://fieldsengineeringconsultants.com/)
 
@@ -36,4 +22,8 @@ Links:
 
 [Articles](./blog/homepage.html)
 
+Contact
+
 [X](https://x.com/curranR5480)
+
+[Linkedin](https://www.linkedin.com/in/curran-robertson-760437272/)
