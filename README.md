@@ -18,8 +18,6 @@ Links:
 
 [Pictures](./images/images.html)
 
-[Some Music I Like](https://www.youtube.com/playlist?list=PLio_a_XmxIqhenMyAxvFjCKbN6LyoQb9A)
-
 [Articles](./blog/homepage.html)
 
 Contact
