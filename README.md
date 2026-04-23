@@ -4,7 +4,7 @@ Links:
 
 [Products sold through CURRAN R&D](./curranrandd.html)
 
-[Fiction Writing](./book/title.html)
+[Fiction Writing](./fiction.html)
 
 [Consultations](https://curranjrobertson.github.io/Fields/index.html)
 
