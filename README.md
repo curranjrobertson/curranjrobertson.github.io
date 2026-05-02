@@ -20,8 +20,10 @@ Links:
 
 [Articles](./blog/homepage.html)
 
-Contact
+Contact:
 
 [X](https://x.com/curranR5480)
 
 [Linkedin](https://www.linkedin.com/in/curran-robertson-760437272/)
+
+[Youtube Channel](https://www.youtube.com/@curranrobertson7643)
