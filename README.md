@@ -22,7 +22,7 @@ Links:
 
 Contact:
 
-[X](https://x.com/curranR5480)
+<!-- [X](https://x.com/curranR5480) -->
 
 [Linkedin](https://www.linkedin.com/in/curran-robertson-760437272/)
 
