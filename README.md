@@ -26,4 +26,6 @@ Contact:
 
 [Linkedin](https://www.linkedin.com/in/curran-robertson-760437272/)
 
+[X](https://x.com/curranR5480)
+
 [Youtube Channel](https://www.youtube.com/@curranrobertson7643)
